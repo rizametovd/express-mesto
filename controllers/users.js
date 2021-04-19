@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require('../models/user');
 
 exports.getUsers = (req, res) => {
   User.find({})
@@ -6,10 +6,10 @@ exports.getUsers = (req, res) => {
       if (users.length >= 1) {
         res.send(users);
       } else {
-        res.status(404).send({ message: "Пользователи не найдены" });
+        res.status(404).send({ message: 'Пользователи не найдены' });
       }
     })
-    .catch(() => res.status(500).send({ message: "Произошла ошибка сервера" }));
+    .catch(() => res.status(500).send({ message: 'Произошла ошибка сервера' }));
 };
 
 exports.getUserById = (req, res) => {
@@ -18,14 +18,14 @@ exports.getUserById = (req, res) => {
       if (user) {
         res.send(user);
       } else {
-        res.status(404).send({ message: "Пользователь не найден" });
+        res.status(404).send({ message: 'Пользователь не найден' });
       }
     })
     .catch((err) => {
-      if (err.name === "CastError") {
-        res.status(400).send({ message: "Переданы некорректные данные" });
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: "Произошла ошибка сервера" });
+        res.status(500).send({ message: 'Произошла ошибка сервера' });
       }
     });
 };
@@ -36,10 +36,10 @@ exports.createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === "ValidationError") {
-        res.status(400).send({ message: "Переданы некорректные данные" });
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: "Произошла ошибка сервера" });
+        res.status(500).send({ message: 'Произошла ошибка сервера' });
       }
     });
 };
@@ -60,14 +60,14 @@ exports.updateProfile = (req, res) => {
       if (userProfile) {
         res.send(userProfile);
       } else {
-        res.status(404).send({ message: "Пользователь не найден" });
+        res.status(404).send({ message: 'Пользователь не найден' });
       }
     })
     .catch((err) => {
-      if (err.name === "CastError") {
-        res.status(400).send({ message: "Переданы некорректные данные" });
+      if (err.name === 'CastError' || 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: "Произошла ошибка сервера" });
+        res.status(500).send({ message: 'Произошла ошибка сервера' });
       }
     });
 };
@@ -88,14 +88,14 @@ exports.updateAvatar = (req, res) => {
       if (userAvatar) {
         res.send(userAvatar);
       } else {
-        res.status(404).send({ message: "Пользователь не найден" });
+        res.status(404).send({ message: 'Пользователь не найден' });
       }
     })
     .catch((err) => {
-      if (err.name === "CastError") {
-        res.status(400).send({ message: "Переданы некорректные данные" });
+      if (err.name === 'CastError' || 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: "Произошла ошибка сервера" });
+        res.status(500).send({ message: 'Произошла ошибка сервера' });
       }
     });
 };

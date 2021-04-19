@@ -1,4 +1,4 @@
-const Card = require("../models/card");
+const Card = require('../models/card');
 
 exports.getCards = (req, res) => {
   Card.find({})
@@ -6,10 +6,10 @@ exports.getCards = (req, res) => {
       if (cards.length >= 1) {
         res.send(cards);
       } else {
-        res.status(404).send({ message: "Карточки не найдены" });
+        res.status(404).send({ message: 'Карточки не найдены' });
       }
     })
-    .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
+    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 };
 
 exports.createCard = (req, res) => {
@@ -19,10 +19,10 @@ exports.createCard = (req, res) => {
   Card.create({ name, link, owner })
     .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === "ValidationError") {
-        res.status(400).send({ message: "Переданы некорректные данные" });
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: "Произошла ошибка сервера" });
+        res.status(500).send({ message: 'Произошла ошибка сервера' });
       }
     });
 };
@@ -33,12 +33,16 @@ exports.deleteCard = (req, res) => {
       if (card) {
         res.send(card);
       } else {
-        res.status(404).send({ message: "Карточка не найдена" });
+        res.status(404).send({ message: 'Карточка не найдена' });
       }
     })
-    .catch((err) =>
-      res.status(500).send({ message: "Произошла ошибка сервера" })
-    );
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+      } else {
+        res.status(500).send({ message: 'Произошла ошибка сервера' });
+      }
+    });
 };
 
 exports.likeCard = (req, res) => {
@@ -46,15 +50,21 @@ exports.likeCard = (req, res) => {
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true }
-  )
+)
     .then((likeCard) => {
       if (likeCard) {
         res.send(likeCard);
       } else {
-        res.status(400).send({ message: "Переданы некорректные данные" });
+        res.status(400).send({ message: 'Переданы некорректные данные' });
       }
     })
-    .catch((err) => res.status(500).send({ message: "Произошла ошибка" }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+      } else {
+        res.status(500).send({ message: 'Произошла ошибка сервера' });
+      }
+    });
 };
 
 exports.dislikeCard = (req, res) => {
@@ -67,8 +77,14 @@ exports.dislikeCard = (req, res) => {
       if (likeCard) {
         res.send(likeCard);
       } else {
-        res.status(400).send({ message: "Переданы некорректные данные" });
+        res.status(400).send({ message: 'Переданы некорректные данные' });
       }
     })
-    .catch((err) => res.status(500).send({ message: "Произошла ошибка" }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+      } else {
+        res.status(500).send({ message: 'Произошла ошибка сервера' });
+      }
+    });
 };
