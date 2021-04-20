@@ -54,7 +54,7 @@ exports.updateProfile = (req, res) => {
       new: true,
       runValidators: true,
       upsert: false,
-    }
+    },
   )
     .then((userProfile) => {
       if (userProfile) {
@@ -82,7 +82,7 @@ exports.updateAvatar = (req, res) => {
       new: true,
       runValidators: true,
       upsert: false,
-    }
+    },
   )
     .then((userAvatar) => {
       if (userAvatar) {

@@ -9,12 +9,12 @@ const { cardsRoutes } = require('./routes/cards');
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
 });
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '607d20243b09861a6807ba70'
+    _id: '607d20243b09861a6807ba70',
   };
 
   next();

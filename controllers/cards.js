@@ -49,13 +49,13 @@ exports.likeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    { new: true }
-)
+    { new: true },
+  )
     .then((likeCard) => {
       if (likeCard) {
         res.send(likeCard);
       } else {
-        res.status(400).send({ message: 'Переданы некорректные данные' });
+        res.status(404).send({ message: 'Карточка не найдена' });
       }
     })
     .catch((err) => {
@@ -71,13 +71,13 @@ exports.dislikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
-    { new: true }
+    { new: true },
   )
     .then((likeCard) => {
       if (likeCard) {
         res.send(likeCard);
       } else {
-        res.status(400).send({ message: 'Переданы некорректные данные' });
+        res.status(404).send({ message: 'Карточка не найдена' });
       }
     })
     .catch((err) => {
