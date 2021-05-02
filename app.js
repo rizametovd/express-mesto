@@ -3,8 +3,15 @@ const express = require('express');
 const { PORT = 3000 } = process.env;
 const app = express();
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const { celebrate, Joi, errors } = require('celebrate');
 const { usersRoutes } = require('./routes/users');
 const { cardsRoutes } = require('./routes/cards');
+const { login, createUser } = require('./controllers/users');
+const { Auth } = require('./middlewares/auth');
+
+app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -12,15 +19,29 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
 });
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '607d20243b09861a6807ba70',
-  };
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(2),
+  }),
+}), login);
 
-  next();
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(2),
+  }),
+}), createUser);
+
+app.use('/users', Auth, usersRoutes);
+app.use('/', Auth, cardsRoutes);
+
+app.use(errors());
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({ message: statusCode === 500 ? 'Ошибка сервера7' : message });
+  next(err);
 });
-
-app.use('/users', usersRoutes);
-app.use('/', cardsRoutes);
 
 app.listen(PORT, () => {});
