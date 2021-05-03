@@ -9,6 +9,7 @@ const { usersRoutes } = require('./routes/users');
 const { cardsRoutes } = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
 const { Auth } = require('./middlewares/auth');
+const NotFoundError = require('./errors/404-not-found-error');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -28,13 +29,20 @@ app.post('/signin', celebrate({
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string(),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(2),
   }),
 }), createUser);
 
 app.use('/users', Auth, usersRoutes);
-app.use('/', Auth, cardsRoutes);
+app.use('/cards', Auth, cardsRoutes);
+
+app.use('*', () => {
+  throw new NotFoundError('Запрашиваемый ресурс не найден');
+});
 
 app.use(errors());
 

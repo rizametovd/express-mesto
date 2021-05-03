@@ -12,7 +12,7 @@
   },
   "scripts": {
     "lint": "npx eslint",
-    "start": "node index.js",
+    "start": "node app.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {
