@@ -10,6 +10,7 @@ const { cardsRoutes } = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
 const { Auth } = require('./middlewares/auth');
 const NotFoundError = require('./errors/404-not-found-error');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -19,6 +20,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useCreateIndex: true,
   useFindAndModify: false,
 });
+
+app.use(requestLogger);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -44,8 +47,9 @@ app.use('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
 
-app.use(errors());
+app.use(errorLogger);
 
+app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({ message: statusCode === 500 ? 'Ошибка сервера7' : message });
