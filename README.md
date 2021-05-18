@@ -1,4 +1,4 @@
-# Проект: Бэкенд для проекта Mesto
+# Бэкенд для проекта Mesto
 
 ![Express](https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/-MongoDB-56a14b?logo=mongodb&logoColor=white)
@@ -9,10 +9,10 @@
 
 
 ## Описание
-Приложение на Express.js. Схемы и модели созданы через Mongoose. Все роуты, кроме `/signup` и `/signin`, защищены. Используется валидация Joi и celebrate. При регистрации пользователя пароль хешируется модулем bcrypt с добавлением соли. Реализована централизованная обработка ошибок.
+Приложение на Express.js. Схемы и модели созданы через Mongoose. Все роуты, кроме `/signup` и `/signin`, защищены. Используется валидация Joi и celebrate. При регистрации пользователя пароль хешируется модулем bcrypt с добавлением соли. Реализована централизованная обработка ошибок. Настроено логирование запросов и ошибок.
 
 ## Задача
-* Написать и развернуть бэкенд для проекта [Mesto](https://rizametovd.github.io/react-mesto-auth/) на React
+* Написать и развернуть бэкенд для проекта [Mesto](https://github.com/rizametovd/react-mesto-auth) на React
 
 ## Роуты
 Для пользователей:</br>
