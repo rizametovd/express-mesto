@@ -4,7 +4,6 @@
 ![MongoDB](https://img.shields.io/badge/-MongoDB-56a14b?logo=mongodb&logoColor=white)
 ![Node](https://img.shields.io/badge/-Node.js-469837?logo=Node.js&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/-JavaScript-f3de35?logo=javaScript&logoColor=black)
-![Webpack](https://img.shields.io/badge/-Webpack-99d6f8?logo=webpack&logoColor=black)
 
 
 
@@ -37,7 +36,6 @@ DELETE /cards/:cardId/likes — убрать лайк с карточки
 * Express.js
 * MongoDB
 * JavaScript
-* WebPack
 * API
 
 ## Установка
